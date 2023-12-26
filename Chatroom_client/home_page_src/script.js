@@ -1,6 +1,22 @@
 // do{
 //     var user_name = window.prompt('Please Enter your Name: ')
 // }while(user_name == null || user_name === " " || user_name == "" || user_name==undefined)
+function getJsonDataFromCookie(cookieName) {
+    const cookieValue = document.cookie
+      .split('; ')
+      .find(row => row.startsWith(`${cookieName}=`));
+  
+    if (cookieValue) {
+      const jsonString = decodeURIComponent(cookieValue.split('=')[1]);
+      return JSON.parse(jsonString);
+    }
+  
+    return null;
+}
+
+const passport = getJsonDataFromCookie('session')
+
+console.log('//////////////\n',passport,"~~~~~~~~~~~~~~~~~~~~~~~~~~\n",passport.user)
 
 var session_data = sessionStorage.getItem('session');
 var user_name = session_data.user.name;
