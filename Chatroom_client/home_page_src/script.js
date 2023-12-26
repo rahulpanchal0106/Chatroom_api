@@ -1,7 +1,9 @@
-do{
-    var user_name = window.prompt('Please Enter your Name: ')
-}while(user_name == null || user_name === " " || user_name == "" || user_name==undefined)
+// do{
+//     var user_name = window.prompt('Please Enter your Name: ')
+// }while(user_name == null || user_name === " " || user_name == "" || user_name==undefined)
 
+var session_data = sessionStorage.getItem('session');
+var user_name = session_data.user.name;
 const chatBody=document.querySelector('.chat-messages');
 chatBody.addEventListener('scroll', function() {
     console.log(chatBody.scrollTop+chatBody.clientHeight,"||",chatBody.scrollHeight,"||",chatBody.clientHeight)

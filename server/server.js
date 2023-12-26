@@ -18,7 +18,7 @@ io.on('connection',(socket)=>{
     console.log(`A user Connected | ${socket.id}`);
     socket.on('message',(data)=>{
         console.log(data)
-        
+        // const user =userModel.findOne({email})
         socket.broadcast.emit('message',data);
         console.log(data.username,">>>>>",data.msg)
         // socket.to(room_id).emit('message',"Message to te rooom",room_id)
