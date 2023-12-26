@@ -71,18 +71,18 @@ function checkLoggedIn(req,res,next){
     const isLoggedIn = req.isAuthenticated();
     const googleUserData = req.user;
     console.log(req.user)
-    if(!userModel.findOne({email:googleUserData.email}) && req.user){
-        userModel.create({
-            sub: googleUserData.sub,
-            name: googleUserData.name,
-            given_name: googleUserData.given_name,
-            family_name: googleUserData.family_name,
-            picture: googleUserData.picture,
-            email:  googleUserData.email,
-            email_verified: googleUserData.email_verified,
-            locale: googleUserData.locale
-        })  
-    }
+    
+    userModel.create({
+        sub: googleUserData.sub,
+        name: googleUserData.name,
+        given_name: googleUserData.given_name,
+        family_name: googleUserData.family_name,
+        picture: googleUserData.picture,
+        email:  googleUserData.email,
+        email_verified: googleUserData.email_verified,
+        locale: googleUserData.locale
+    })  
+    
 
     if(!isLoggedIn){
         return res.status(401).json({
