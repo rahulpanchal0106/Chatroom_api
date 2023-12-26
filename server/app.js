@@ -91,7 +91,7 @@ app.get('/failure',(req,res)=>{
 })
 
 app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,"..","client","landing_page.html"))
+    res.sendFile(path.join(__dirname,"..","Chatroom_client","landing_page.html"))
 })
 
 app.use(express.static(
@@ -100,7 +100,7 @@ app.use(express.static(
 
 app.get('/chat',checkLoggedIn,(req,res)=>{
     console.log('Serving Home Page');
-    res.sendFile(path.join(__dirname,"..","client","index.html"));
+    res.sendFile(path.join(__dirname,"..","Chatroom_client","index.html"));
 })
 
 
