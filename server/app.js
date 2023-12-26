@@ -117,39 +117,5 @@ app.get('/chat',checkLoggedIn,(req,res)=>{
     res.sendFile(path.join(__dirname,"..","Chatroom_client","index.html"));
 })
 
-const http = require('http')
-const io = require('socket.io')(http,{
-    cors:{
-        origin:'*'
-    }
-});
 
-io.on('connection',(socket)=>{
-    console.log(`A user Connected | ${socket.id}`);
-    socket.on('message',(data)=>{
-        console.log(data)
-        
-        socket.broadcast.emit('message',data);
-        console.log(data.username,">>>>>",data.msg)
-        // socket.to(room_id).emit('message',"Message to te rooom",room_id)
-    });
-    socket.on('newuser',(data)=>{
-        console.log(data)
-        socket.broadcast.emit('newuser',data)
-    });
-    socket.on('disconnect',(data)=>{
-        console.log(data)
-        socket.broadcast.emit('userLeft',data)
-    });
-
-
-    //private room
-    const room_id="a"
-    socket.join(room_id,()=>{
-        console.log('joined a room')
-    });
-    
-
-
-})
 module.exports = app;
