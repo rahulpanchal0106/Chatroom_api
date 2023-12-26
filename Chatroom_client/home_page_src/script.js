@@ -17,8 +17,8 @@ chatBody.addEventListener('scroll', function() {
 // }
 
 
-// const decoded_cookie = decodeURIComponent(document.cookie);
-// console.log(`!!!!!!!!!!!!!!!!!!!!!  ${decoded_cookie}`)
+const decoded_cookie = decodeURIComponent(document.cookie);
+console.log(`!!!!!!!!!!!!!!!!!!!!!  ${decoded_cookie}`)
 
 function go_bottom(){
     

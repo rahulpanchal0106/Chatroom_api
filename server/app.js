@@ -22,7 +22,7 @@ const config = {
 }
 
 const AUTH_OPTIONS = {
-    callbackURL: 'https://chatroom-gy71.onrender.com/auth/google/callback', //https://chatroom-gy71.onrender.com/auth/google/callback
+    callbackURL: 'http://localhost:3030/auth/google/callback', //https://chatroom-gy71.onrender.com/auth/google/callback
     clientID: config.CLIENT_ID,
     clientSecret: config.CLIENT_SECRET
 }
