@@ -9,17 +9,7 @@ const {verify}=require('crypto')
 
 const helmet = require('helmet')
 
-const csp = {
-    'default-src': ["'self'"],
-    'script-src': ["'self'", 'https://cdn.socket.io/4.7.2/'],
-    'style-src': ["'self'", 'https://chatroom-gy71.onrender.com/'],
-    'img-src': ["'self'", 'data:'],
-   };
-   
-   app.use((req, res, next) => {
-    res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
-    next();
-});
+
 
 const config = {
     CLIENT_ID: process.env.CLIENT_ID,
@@ -52,6 +42,18 @@ passport.deserializeUser((obj,done)=>{
 
 const app = express();
 app.use(helmet());
+
+const csp = {
+    'default-src': ["'self'"],
+    'script-src': ["'self'", 'https://cdn.socket.io/4.7.2/'],
+    'style-src': ["'self'", 'https://chatroom-gy71.onrender.com/'],
+    'img-src': ["'self'", 'data:'],
+   };
+   
+   app.use((req, res, next) => {
+    res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
+    next();
+});
 app.use(cookieSession({
     name:'session',
     maxAge:24*60*60*1000,
