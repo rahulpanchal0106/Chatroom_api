@@ -12,9 +12,9 @@ io.on('connection',(socket)=>{
     socket.on('message',(data)=>{
         console.log(data)
         
-        //socket.broadcast.emit('message',data);
+        socket.broadcast.emit('message',data);
         console.log(data.username,">>>>>",data.msg)
-        socket.to(room_id).emit('message',"Message to te rooom",room_id)
+        // socket.to(room_id).emit('message',"Message to te rooom",room_id)
     });
     socket.on('newuser',(data)=>{
         console.log(data)
