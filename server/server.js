@@ -11,9 +11,10 @@ io.on('connection',(socket)=>{
     console.log(`A user Connected | ${socket.id}`);
     socket.on('message',(data)=>{
         console.log(data)
-        console.log(data.msg,"<<<<<",data.username)
-        socket.broadcast.emit('message',data);
+        
+        //socket.broadcast.emit('message',data);
         console.log(data.username,">>>>>",data.msg)
+        socket.to(room_id).emit('message',"Message to te rooom",room_id)
     });
     socket.on('newuser',(data)=>{
         console.log(data)
@@ -22,7 +23,15 @@ io.on('connection',(socket)=>{
     socket.on('disconnect',(data)=>{
         console.log(data)
         socket.broadcast.emit('userLeft',data)
-    })
+    });
+
+
+    //private room
+    const room_id="a"
+    socket.join(room_id,()=>{
+        console.log('joined a room')
+    });
+    
 
 
 })
