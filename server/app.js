@@ -109,7 +109,7 @@ app.get('/',(req,res)=>{
 })
 
 app.use(express.static(
-    path.join(__dirname,'..','client')
+    path.join(__dirname,'..','Chatroom_client')
 ));
 
 app.get('/chat',checkLoggedIn,(req,res)=>{
