@@ -54,7 +54,6 @@ const csp = {
     'img-src': ["'self'", 'data:'],
 };
 
-   
 app.use((req, res, next) => {
     res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
     next();
@@ -72,7 +71,7 @@ function checkLoggedIn(req,res,next){
     const isLoggedIn = req.isAuthenticated();
     const googleUserData = req.user;
     console.log(req.user)
-    if(!userModel.findOne({email:googleUserData.email})){
+    if(!userModel.findOne({email:googleUserData.email}) && req.user){
         userModel.create({
             sub: googleUserData.sub,
             name: googleUserData.name,

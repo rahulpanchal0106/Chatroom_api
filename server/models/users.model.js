@@ -2,8 +2,7 @@ const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
     sub:{
-        type:String,
-        unique:true
+        type:String
     },
     name:{
         type:String
@@ -18,8 +17,7 @@ const userSchema = mongoose.Schema({
         type:String
     },
     email:{
-        type:String,
-        unique:true
+        type:String
     },
     email_verified:{
         trype:Boolean
