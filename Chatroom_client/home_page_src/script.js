@@ -16,10 +16,10 @@ function getJsonDataFromCookie(cookieName) {
 
 const passport = getJsonDataFromCookie('session')
 
-console.log('//////////////\n',passport,"~~~~~~~~~~~~~~~~~~~~~~~~~~\n",passport.user)
+console.log('//////////////\n',passport,"~~~~~~~~~~~~~~~~~~~~~~~~~~\n",passport.name)
 
 var session_data = sessionStorage.getItem('session');
-var user_name = session_data.user.name;
+var user_name = session_data;
 const chatBody=document.querySelector('.chat-messages');
 chatBody.addEventListener('scroll', function() {
     console.log(chatBody.scrollTop+chatBody.clientHeight,"||",chatBody.scrollHeight,"||",chatBody.clientHeight)
