@@ -97,7 +97,8 @@ app.get('/auth/google/callback',
 );
 app.get('/auth/logout',(req,res)=>{
     console.log('logging out');
-    req.logOut()
+    req.logout();
+    res.redirect('/');
 })
 
 app.get('/failure',(req,res)=>{

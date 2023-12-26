@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global chat room</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./home_page_src/styles.css">
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" integrity="sha384-mZLF4UVrpi/QTWPA7BjNPEnkIfRFn4ZEO3Qt/HFklTJBj/gBOV8G3HcKn4NfQblz" crossorigin="anonymous"></script>
 </head>
 <body>
-
+<nav>
+    <a href="/auth/logout">logout</a>
+</nav>
 <div class="chat-container">
     <div class="chat-messages" id="chat-messages">
         <button id="goBottom" onclick="go_bottom()">
@@ -28,6 +30,6 @@
 
 
 
-<script defer src="script.js"></script>
+<script defer src="./home_page_src/script.js"></script>
 </body>
 </html>
