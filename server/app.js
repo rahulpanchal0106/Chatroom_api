@@ -44,12 +44,13 @@ const app = express();
 app.use(helmet());
 const csp = {
     'default-src': ["'self'"],
-    'script-src': ["'self'", 'https://cdn.socket.io/4.7.2/'],
+    'script-src': ["'self'", 'https://cdn.socket.io/4.7.2/', 'strict-dynamic'],
     'style-src': ["'self'", 'https://chatroom-gy71.onrender.com/'],
     'img-src': ["'self'", 'data:'],
-   };
+};
+
    
-   app.use((req, res, next) => {
+app.use((req, res, next) => {
     res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
     next();
 });
