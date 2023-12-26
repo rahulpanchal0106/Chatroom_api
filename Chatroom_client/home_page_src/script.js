@@ -16,7 +16,7 @@ function getJsonDataFromCookie(cookieName) {
 
 const passport = getJsonDataFromCookie('session')
 
-console.log('//////////////\n',passport,"~~~~~~~~~~~~~~~~~~~~~~~~~~\n",passport.name)
+console.log('//////////////\n',passport,"~~~~~~~~~~~~~~~~~~~~~~~~~~\n",passport)
 
 var session_data = sessionStorage.getItem('session');
 var user_name = session_data;
