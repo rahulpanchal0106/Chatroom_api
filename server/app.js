@@ -7,6 +7,8 @@ const {Strategy} = require('passport-google-oauth20');
 const cookieSession = require('cookie-session')
 const {verify}=require('crypto')
 
+const userModel = require('./models/users.model')
+
 const helmet = require('helmet')
 
 
@@ -20,14 +22,15 @@ const config = {
 }
 
 const AUTH_OPTIONS = {
-    callbackURL: 'https://chatroom-gy71.onrender.com/auth/google/callback', 
+    callbackURL: 'http://localhost:3030/auth/google/callback', //https://chatroom-gy71.onrender.com/auth/google/callback
     clientID: config.CLIENT_ID,
     clientSecret: config.CLIENT_SECRET
 }
 
 function verifyCallback(accessToken, refreshToken,profile,done){
     console.log('Google Profile',profile._json,"\nProvided by ",profile.provider);
-    done(null,profile);
+    
+    return done(null,profile)
 }
 
 passport.use(new Strategy(AUTH_OPTIONS,verifyCallback))
@@ -37,12 +40,14 @@ passport.serializeUser((user,done)=>{
 })
 //reading session from cookie
 passport.deserializeUser((obj,done)=>{
+    console.log('Deserializing data: ',obj)
     done(null,obj);
 })
 
 const app = express();
 app.use(helmet());
 const csp = {
+    // 'connect-src':["'self'",'https://chatroom-gy71.onrender.com/'],
     'default-src': ["'self'"],
     'script-src': ["'self'", 'https://cdn.socket.io/4.7.2/', 'strict-dynamic'],
     'style-src': ["'self'", 'https://chatroom-gy71.onrender.com/','unsafe-inline'],
@@ -65,7 +70,20 @@ app.use(passport.session())
 function checkLoggedIn(req,res,next){
     
     const isLoggedIn = req.isAuthenticated();
-    //console.log(profile);
+    const googleUserData = req.user;
+    if(!userModel.findOne({email:googleUserData.email})){
+        userModel.create({
+            sub: googleUserData.sub,
+            name: googleUserData.name,
+            given_name: googleUserData.given_name,
+            family_name: googleUserData.family_name,
+            picture: googleUserData.picture,
+            email:  googleUserData.email,
+            email_verfied: googleUserData.email_varified,
+            locale: googleUserData.locale
+        })  
+    }
+
     if(!isLoggedIn){
         return res.status(401).json({
             error:'You must log in!'

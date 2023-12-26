@@ -1,12 +1,18 @@
+require('dotenv').config();
 const http = require('http');
 const app = require('./app');
 const server = http.createServer(app);
-
+const mongoose = require('mongoose');
 const io = require('socket.io')(server,{
     cors:{
         origin:'*'
     }
 });
+
+const MONGO_URI = process.env.MONGO_URI;
+const PORT = process.env.PORT;
+
+const userModel = require('./models/users.model')
 
 io.on('connection',(socket)=>{
     console.log(`A user Connected | ${socket.id}`);
@@ -37,6 +43,20 @@ io.on('connection',(socket)=>{
 
 })
 
-server.listen(3030,()=>{
-    console.log('listening on 3030')
-})
+async function start_server(){
+    await mongoose.connect(MONGO_URI)
+    .then(()=>{
+        console.log("Mongodb connection ready")
+    })
+    .catch((err)=>{
+        console.error(err)
+    })
+
+
+    server.listen(PORT,()=>{
+        console.log('listening on 3030')
+    })
+}
+
+start_server()
+

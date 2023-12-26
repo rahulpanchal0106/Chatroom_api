@@ -10,6 +10,16 @@ chatBody.addEventListener('scroll', function() {
     
 });
 
+// function decoding_cookie_data(cookie){
+//     const decoded_cookie = decodeURIComponent(cookie);
+//     return 
+
+// }
+
+
+// const decoded_cookie = decodeURIComponent(document.cookie);
+// console.log(`!!!!!!!!!!!!!!!!!!!!!  ${decoded_cookie}`)
+
 function go_bottom(){
     
     const chatBody=document.querySelector('.chat-messages');
