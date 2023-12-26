@@ -22,7 +22,7 @@ const config = {
 }
 
 const AUTH_OPTIONS = {
-    callbackURL: 'https://chatroom-gy71.onrender.com/auth/google/callback', //https://chatroom-gy71.onrender.com/auth/google/callback
+    callbackURL: process.env.oAuthCallback_local,
     clientID: config.CLIENT_ID,
     clientSecret: config.CLIENT_SECRET
 }
@@ -71,6 +71,7 @@ function checkLoggedIn(req,res,next){
     
     const isLoggedIn = req.isAuthenticated();
     const googleUserData = req.user;
+    console.log(req.user)
     if(!userModel.findOne({email:googleUserData.email})){
         userModel.create({
             sub: googleUserData.sub,
@@ -79,7 +80,7 @@ function checkLoggedIn(req,res,next){
             family_name: googleUserData.family_name,
             picture: googleUserData.picture,
             email:  googleUserData.email,
-            email_verfied: googleUserData.email_varified,
+            email_verified: googleUserData.email_verified,
             locale: googleUserData.locale
         })  
     }

@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema({
         type:String,
         unique:true
     },
-    email_varified:{
+    email_verified:{
         trype:Boolean
     },
     locale:{
