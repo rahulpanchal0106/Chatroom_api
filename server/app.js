@@ -45,7 +45,7 @@ app.use(helmet());
 const csp = {
     'default-src': ["'self'"],
     'script-src': ["'self'", 'https://cdn.socket.io/4.7.2/', 'strict-dynamic'],
-    'style-src': ["'self'", 'https://chatroom-gy71.onrender.com/'],
+    'style-src': ["'self'", 'https://chatroom-gy71.onrender.com/','unsafe-inline'],
     'img-src': ["'self'", 'data:'],
 };
 
