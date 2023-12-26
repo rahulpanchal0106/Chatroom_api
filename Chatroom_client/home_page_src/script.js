@@ -1,20 +1,21 @@
 // do{
 //     var user_name = window.prompt('Please Enter your Name: ')
 // }while(user_name == null || user_name === " " || user_name == "" || user_name==undefined)
-async function getJsonDataFromCookie() {
-    const cookie = document.cookie.split(';')
-    const cookies = atob(cookie)
-    let res;
-    for(let i=1; i<cookies.length; i++){
-        res+=i+'-'+cookies[i-1]+'<br>'
-    }
-    
-    
+function getJsonDataFromBase64Cookie(cookieName) {
+    const cookieValue = document.cookie
+      .split('; ')
+      .find(row => row.startsWith(`${cookieName}=`));
   
-    return res;
-}
+    if (cookieValue) {
+      const base64String = cookieValue.split('=')[1];
+      const jsonString = atob(base64String); // Base64 decoding
+      return JSON.parse(jsonString);
+    }
+  
+    return null;
+  }
 
-const passport = getJsonDataFromCookie()
+const passport = getJsonDataFromBase64Cookie('session')
 
 console.log('//////////////\n',passport,"~~~~~~~~~~~~~~~~~~~~~~~~~~\n",passport)
 
