@@ -2,13 +2,13 @@
 //     var user_name = window.prompt('Please Enter your Name: ')
 // }while(user_name == null || user_name === " " || user_name == "" || user_name==undefined)
 async function getJsonDataFromCookie() {
-    const cookies = document.cookie.split(';')
-
+    const cookie = document.cookie.split(';')
+    const cookies = atob(cookie)
     let res;
     for(let i=1; i<cookies.length; i++){
         res+=i+'-'+cookies[i-1]+'<br>'
     }
-  
+    
     
   
     return res;
