@@ -47,7 +47,7 @@ function get_time(){
     return time
 }
 
-const socket = io(`ws://localhost:3030`)//wss://chatroom-gy71.onrender.com
+const socket = io('wss://chatroom-gy71.onrender.com')//wss://chatroom-gy71.onrender.com
 socket.on('connect',()=>{
     console.log(`${user_name} joined the chatroom!`);
     const user_joined = `<div id="joined">${user_name} joined the chat at ${get_time()} </div>`
