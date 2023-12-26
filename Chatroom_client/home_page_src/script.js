@@ -1,25 +1,25 @@
 // do{
 //     var user_name = window.prompt('Please Enter your Name: ')
 // }while(user_name == null || user_name === " " || user_name == "" || user_name==undefined)
-function getJsonDataFromCookie(cookieName) {
-    const cookieValue = document.cookie
-      .split('; ')
-      .find(row => row.startsWith(`${cookieName}=`));
-  
-    if (cookieValue) {
-      const jsonString = decodeURIComponent(cookieValue.split('=')[1]);
-      return JSON.parse(jsonString);
+async function getJsonDataFromCookie() {
+    const cookieValue = document.cookie.split(';')
+
+    let res;
+    for(let i=1; i<cookies.length; i++){
+        res+=i+'-'+cookies[i-1]+'<br>'
     }
   
-    return null;
+    
+  
+    return res;
 }
 
-const passport = getJsonDataFromCookie('session')
+const passport = getJsonDataFromCookie()
 
 console.log('//////////////\n',passport,"~~~~~~~~~~~~~~~~~~~~~~~~~~\n",passport)
 
 var session_data = sessionStorage.getItem('session');
-var user_name = session_data;
+var user_name = passport;
 const chatBody=document.querySelector('.chat-messages');
 chatBody.addEventListener('scroll', function() {
     console.log(chatBody.scrollTop+chatBody.clientHeight,"||",chatBody.scrollHeight,"||",chatBody.clientHeight)
