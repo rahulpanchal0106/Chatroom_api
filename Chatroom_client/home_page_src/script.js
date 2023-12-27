@@ -110,7 +110,7 @@ socket.on('newuser',(data)=>{
 })
 
 socket.on('userLeft',(data)=>{
-    const user_left = `<div id="joined">Someone Left the chat</div>`
+    const user_left = data
     document.querySelector('#chat-messages').innerHTML+=user_left;
     console.log(user_left)
     socket.emit('userLeft',user_left);
