@@ -5,7 +5,7 @@ const path = require('path');
 const passport = require('passport');
 const {Strategy} = require('passport-google-oauth20');
 const cookieSession = require('cookie-session')
-const session = require('express-session');
+
 const {verify}=require('crypto')
 
 const userModel = require('./models/users.model')
