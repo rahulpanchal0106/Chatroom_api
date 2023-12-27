@@ -15,12 +15,12 @@ function getJsonDataFromBase64Cookie(cookieName) {
     return null;
   }
 
-const passport = getJsonDataFromBase64Cookie('session')
+const passport = getJsonDataFromBase64Cookie('session');
 
-console.log('//////////////\n',passport,"~~~~~~~~~~~~~~~~~~~~~~~~~~\n",passport)
+console.log('//////////////\n',passport,"~~~~~~~~~~~~~~~~~~~~~~~~~~\n",passport.user.name)
 
 var session_data = sessionStorage.getItem('session');
-var user_name = passport;
+var user_name = passport.user.name;
 const chatBody=document.querySelector('.chat-messages');
 chatBody.addEventListener('scroll', function() {
     console.log(chatBody.scrollTop+chatBody.clientHeight,"||",chatBody.scrollHeight,"||",chatBody.clientHeight)
