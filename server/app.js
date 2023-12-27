@@ -61,7 +61,8 @@ app.use((req, res, next) => {
 app.use(cookieSession({
     name:'session',
     maxAge:24*60*60*1000,
-    keys: [config.COOKIE_KEY_1, config.COOKIE_KEY_2]
+    keys: [config.COOKIE_KEY_1, config.COOKIE_KEY_2],
+    httpOnly:false
 }))
 app.use(passport.initialize())
 app.use(passport.session())
