@@ -152,8 +152,12 @@ document.querySelector('#send').onclick=(e)=>{
 }
 
 window.addEventListener('beforeunload', function (event) {
+
     const message = 'Are you sure you want to leave? Your changes may not be saved.';
     event.returnValue = message;
-    
+    const user_left = `<div id="joined">${user_name} tried to leave chat</div>`
+    document.querySelector('#chat-messages').innerHTML+=user_left;
+    console.log(user_left)
+    socket.emit('userLeft',user_left);
 });
   

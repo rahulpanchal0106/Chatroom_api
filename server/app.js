@@ -5,6 +5,7 @@ const path = require('path');
 const passport = require('passport');
 const {Strategy} = require('passport-google-oauth20');
 const cookieSession = require('cookie-session')
+const session = require('express-session');
 const {verify}=require('crypto')
 
 const userModel = require('./models/users.model')
@@ -58,25 +59,7 @@ app.use((req, res, next) => {
     res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
     next();
 });
-// app.use((req, res, next) => {
-    
-//     const cookieOptions = {
-//         name:'session',
-//         maxAge: 24 * 60 * 60 * 1000,
-//         keys: [config.COOKIE_KEY_1, config.COOKIE_KEY_2], 
-//         httpOnly: false
-//     };
-  
-//     res.cookie('session', req.session, cookieOptions);
-  
-//     next();
-// });
-const cookieOptions = {
-    name:'session',
-    maxAge: 24 * 60 * 60 * 1000,
-    keys: [config.COOKIE_KEY_1, config.COOKIE_KEY_2], 
-    httpOnly: false
-};
+
 app.use(cookieSession({
     name:'session',
     maxAge:24*60*60*1000,
@@ -84,6 +67,18 @@ app.use(cookieSession({
     httpOnly:false
     
 }))
+
+// app.use(session({
+//     name: 'session',
+//     secret: [config.COOKIE_KEY_1, config.COOKIE_KEY_2],
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//       maxAge: 24 * 60 * 60 * 1000,
+//       httpOnly: false,
+//     },
+// }));
+
 app.use(passport.initialize())
 app.use(passport.session())
 
