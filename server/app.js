@@ -58,19 +58,25 @@ app.use((req, res, next) => {
     res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
     next();
 });
-app.use((req, res, next) => {
+// app.use((req, res, next) => {
     
-    const cookieOptions = {
-        name:'session',
-        maxAge: 24 * 60 * 60 * 1000,
-        keys: [config.COOKIE_KEY_1, config.COOKIE_KEY_2], 
-        httpOnly: false
-    };
+//     const cookieOptions = {
+//         name:'session',
+//         maxAge: 24 * 60 * 60 * 1000,
+//         keys: [config.COOKIE_KEY_1, config.COOKIE_KEY_2], 
+//         httpOnly: false
+//     };
   
-    res.cookie('session', req.session, cookieOptions);
+//     res.cookie('session', req.session, cookieOptions);
   
-    next();
-});
+//     next();
+// });
+const cookieOptions = {
+    name:'session',
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [config.COOKIE_KEY_1, config.COOKIE_KEY_2], 
+    httpOnly: false
+};
 app.use(cookieSession({
     name:'session',
     maxAge:24*60*60*1000,
