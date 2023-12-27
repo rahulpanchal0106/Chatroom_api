@@ -58,14 +58,23 @@ app.use((req, res, next) => {
     res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
     next();
 });
+app.use((req, res, next) => {
+    
+    const cookieOptions = {
+      maxAge: 24 * 60 * 60 * 1000, 
+      httpOnly: false,
+    };
+  
+    res.cookie('session', req.session, cookieOptions);
+  
+    next();
+  });
 app.use(cookieSession({
     name:'session',
     maxAge:24*60*60*1000,
     keys: [config.COOKIE_KEY_1, config.COOKIE_KEY_2],
-    // httpOnly:false
-    cookie:{
-        httpOnly:false
-    }
+    httpOnly:false
+    
 }))
 app.use(passport.initialize())
 app.use(passport.session())
