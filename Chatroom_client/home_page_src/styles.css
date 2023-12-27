@@ -28,7 +28,7 @@ nav{
 .chat-container {
     max-width: 600px;
     margin: auto;
-    height: 100vh;
+    height: 100lvh;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: auto;
