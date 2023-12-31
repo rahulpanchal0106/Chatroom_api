@@ -7,12 +7,13 @@ const {Strategy} = require('passport-google-oauth20');
 const cookieSession = require('cookie-session')
 
 const {verify}=require('crypto')
+const crypto = require('crypto');
 
 const userModel = require('./models/users.model')
-
+const chats_model = require('./models/chats.model')
 const helmet = require('helmet')
 
-
+// const activeUsers = require('./server');
 
 const config = {
     CLIENT_ID: process.env.CLIENT_ID,
@@ -41,22 +42,27 @@ passport.serializeUser((user,done)=>{
 })
 //reading session from cookie
 passport.deserializeUser((obj,done)=>{
-    console.log('Deserializing data: ',obj)
+    // console.log('Deserializing data: ',obj)
     done(null,obj);
 })
 
 const app = express();
 app.use(helmet());
-const csp = {
-    // 'connect-src':["'self'",'https://chatroom-gy71.onrender.com/'],
-    'default-src': ["'self'"],
-    'script-src': ["'self'", 'https://cdn.socket.io/4.7.2/', 'strict-dynamic'],
-    'style-src': ["'self'", 'https://chatroom-gy71.onrender.com/','unsafe-inline'],
-    'img-src': ["'self'", 'data:'],
-};
 
 app.use((req, res, next) => {
+    
+    const csp = {
+        'default-src': ["'self'"],
+        'script-src': ["'self'", 'https://cdn.socket.io/4.7.2/', "'unsafe-hashes'", "'unsafe-inline'", 'https://code.jquery.com', 'https://maxcdn.bootstrapcdn.com'],
+        'style-src': ["'self'", 'http://localhost:3030/chat', "'unsafe-hashes'", "'unsafe-inline'", 'https://maxcdn.bootstrapcdn.com'],
+        'img-src': ["'self'", 'data:'],
+        'font-src': ["'self'", 'https://maxcdn.bootstrapcdn.com'],
+    };
+    
+
     res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
+
+    
     next();
 });
 
@@ -126,7 +132,7 @@ app.get('/auth/google/callback',
         session: true,
     }),
     (req,res)=>{
-        console.log("Google called us back")
+        console.log("Google called us back");
     }
 );
 app.get('/auth/logout',(req,res)=>{
@@ -147,10 +153,22 @@ app.use(express.static(
     path.join(__dirname,'..','Chatroom_client')
 ));
 
+app.get('/history',async (req,res)=>{
+    console.log('history endpiont')
+    const chat_history= await chats_model.find({});
+    res.json(chat_history)
+    console.log("Chat history served")
+
+})
+
+
+
 app.get('/chat',checkLoggedIn,(req,res)=>{
     console.log('Serving Home Page');
     res.sendFile(path.join(__dirname,"..","Chatroom_client","index.html"));
-})
+});
+
+
 
 
 module.exports = app;

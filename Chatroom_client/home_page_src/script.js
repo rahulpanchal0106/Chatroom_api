@@ -13,7 +13,28 @@ function getJsonDataFromBase64Cookie(cookieName) {
     }
   
     return null;
-  }
+}
+
+async function getHistory(){
+    await fetch('/history')
+    .then((res)=>{
+        return res.json()
+    })
+    .then((data)=>{
+        
+        data.forEach((chat)=>{
+            
+            if(chat.email==='null_email'){
+                // console.log(chat,"\n👽",chat.msg)
+                display_join_status(chat.msg)
+            }else{
+                display_messages(chat)
+            }
+        })
+    })
+}
+
+getHistory()
 
 const cookie_data = getJsonDataFromBase64Cookie('session');
 
@@ -21,9 +42,11 @@ console.log('//////////////\n',cookie_data,"~~~~~~~~~~~~~~~~~~~~~~~~~~\n",cookie
 
 var session_data = sessionStorage.getItem('session');
 var user_name = cookie_data.passport.user.name;
+var email = cookie_data.passport.user.email;
+
 const chatBody=document.querySelector('.chat-messages');
 chatBody.addEventListener('scroll', function() {
-    console.log(chatBody.scrollTop+chatBody.clientHeight,"||",chatBody.scrollHeight,"||",chatBody.clientHeight)
+    // console.log(chatBody.scrollTop+chatBody.clientHeight,"||",chatBody.scrollHeight,"||",chatBody.clientHeight)
     
     handle_goBottom();
     
@@ -76,44 +99,83 @@ function get_time(){
     return time
 }
 
-const socket = io('wss://chatroom-gy71.onrender.com')//wss://chatroom-gy71.onrender.com
+const socket = io('wss://chatroom-gy71.onrender.com',{
+    auth:{
+        user_name:user_name
+    }
+})//ws://localhost:3030
 socket.on('connect',()=>{
     console.log(`${user_name} joined the chatroom!`);
     const user_joined = `<div id="joined">${user_name} joined the chat at ${get_time()} </div>`
-    document.querySelector('#chat-messages').innerHTML+=user_joined;
+    document.querySelector('#chat-messages').lastElementChild+=user_joined;
     socket.emit('newuser',user_joined);
     handle_goBottom();
 })
-
-
-
-socket.on('message',(data)=>{
-    
-    console.log(data.username,"<<<<<",data.msg," || ",get_time())
-    
-    const msg_received = `<div id="msg_recieved">
-    <label id="user_name">${data.username}</label><br>
+function display_join_status(data){
+    document.querySelector('#chat-messages').innerHTML+=data;
+    handle_goBottom();
+}
+function display_messages(data){
+    var msg_received = `
+    <div id="msg_recieved" class='${data.email}'>
+        <label id="user_name">${data.username}</label><br>
         <div id="msg_data">    
             ${data.msg}
         </div>
         <div id="msg_time">
-            ${get_time()}
+            ${data.time}
         </div>
     </div>`;
+
+    
+    //console.log('🚀🚀🚀🚀🚀🚀🚀🚀🚀',document.getElementById('msg_recieved'))
+    //console.log("TTTTTTTTTTTTTTTTTTTTTTTTT",data.time)
+    
+    if(data.email==email){
+        msg_received = `
+        <div id="msg_sent" class='${data.email}'>
+            <label id="user_name">${data.username}</label><br>
+            <div id="msg_data">    
+                ${data.msg}
+            </div>
+            <div id="msg_time">
+                ${data.time}
+            </div>
+        </div>`;
+    }
+
+    // const timeO=document.querySelector('#msg_time')
     document.querySelector('#chat-messages').innerHTML+=msg_received;
+    // console.log("TTTTTTTTTTTTTTTTTT",timeO)
+}
+
+socket.on('message',(data)=>{
+
+    console.log("data received: ",data)
+    
+    display_messages(data)
     handle_goBottom();
 })
 socket.on('newuser',(data)=>{
     
-    document.querySelector('#chat-messages').innerHTML+=data;
-    handle_goBottom();
+    display_join_status(data)
+    
 })
 
+
+
+// socket.on('disconnect',()=>{
+    
+//     const user_left = `<div id="joined">${user_name} Left the chat at ${get_time()}</div>`
+//     document.querySelector('#chat-messages').innerHTML+=user_left;
+//     socket.emit('userLeft',user_left);
+// })
+
 socket.on('userLeft',(data)=>{
-    const user_left = `<div id="joined">Someone Left the chat</div>`
-    document.querySelector('#chat-messages').innerHTML+=user_left;
-    console.log("☄️☄️",user_left)
-    socket.emit('userLeft',user_left);
+    
+    console.log("☄️☄️",data)
+    // const user_left = `<div id="joined">${user_name} Left the chat at ${get_time()}</div>`
+    document.querySelector('#chat-messages').innerHTML+=data;
     handle_goBottom();
 })
 
@@ -124,7 +186,8 @@ function send_message(){
         console.log(`${user_name}>>>>>${msg.value}`);
         const send_data = {
             'username':user_name,
-            'msg':msg.value
+            'msg':msg.value,
+            'email':email,
         }
         const msg_sent = `<div id="msg_sent">
             <label id="user_name">${user_name}</label><br>
@@ -135,6 +198,8 @@ function send_message(){
                 ${get_time()}
             </div>
         </div>`;
+
+        
 
         document.querySelector('#chat-messages').innerHTML+=msg_sent;
         socket.emit('message',send_data);
@@ -147,8 +212,7 @@ function send_message(){
 document.querySelector('#send').onclick=(e)=>{
     e.preventDefault()
     send_message()
-    
-    
+    go_bottom();
 }
 
 window.addEventListener('beforeunload', function (event) {
@@ -156,4 +220,89 @@ window.addEventListener('beforeunload', function (event) {
     event.returnValue = message;
     
 });
-  
+
+document.querySelector('#members').onclick=()=>{
+    console.log('%%%%%%%%%%%%Clicked%%%%%%%%%%%%%%');
+    fetch('/members')
+    .then(res=>{
+        return res.json()
+    })
+    .then(data=>{
+        console.log(data,'||',Object.keys(data).length);
+        const users_online = Object.values(data);
+        console.log("Users Online: ",users_online)
+
+
+        // for(let i=0;i<Object.keys(data).length;i++){
+        //     console.log(Object.values(data))
+        // }
+
+
+    })
+    // socket.emit('members',user_name)
+    
+    
+}
+
+// document.querySelector('#options').addEventListener('click',(event)=>{
+//     event.preventDefault();
+//     console.log('$$$$$$$$$$$$$$$$clicked$$$$$$$$$$$$$$$$$$');
+
+
+// })
+function toggle(el,c){
+    if(c%2!=0){
+        el.style.display="flex"
+    }else{
+        el.style.display="none"
+        c=0
+    }
+}
+let options_c = 0;
+document.querySelector('#options').onclick=()=>{
+    options_c++;
+    const dd_menu = document.querySelector('#dropdown-menu')
+    toggle(dd_menu,options_c)
+}
+let members_c = 0;
+document.querySelector('#members').onclick=async ()=>{
+
+    await fetch('/members')
+    .then(res=>{
+        return res.json()
+    })
+    .then(data=>{
+        console.log(data,'||',Object.keys(data).length);
+        const users_online = Object.values(data);
+        console.log("Users Online: ",users_online)
+
+        const au_list=document.querySelector('#au_list')
+        let au_c=0
+        au_list.innerHTML=''
+        users_online.forEach(user=>{
+            au_c++;
+            const au_markup = `<div id="au_item">
+                <div>${au_c}</div>
+                <div id="au_name">${user}</div>
+                <div id="au_"></div>
+            </div>`
+            au_list.innerHTML+=au_markup
+        })
+        au_c=0;
+    })
+
+
+
+    members_c++;
+    const au = document.querySelector('#active_users');
+    au.style.display="flex"
+    document.querySelector('#au_x').onclick=()=>{
+        au.style.display="none"
+    }
+}
+
+// window.addEventListener('load',(()=>{
+//     console.log('Loading');
+//     document.querySelector('#loading').style.display="flex"
+// }))
+
