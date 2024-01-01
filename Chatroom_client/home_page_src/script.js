@@ -92,10 +92,6 @@ function clear_input(){
 function get_time() {
     const current = new Date();
 
-    current.setHours(current.getHours() - 2);
-    current.setMinutes(current.getMinutes() - 30);
-
-
     const current_hr = current.getHours();
     const current_min = current.getMinutes();
     const current_sec = current.getSeconds();
