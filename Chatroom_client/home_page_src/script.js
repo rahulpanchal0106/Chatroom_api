@@ -89,15 +89,26 @@ function clear_input(){
     input.value=''
 }
 
-function get_time(){
-    const current = new Date()
+function get_time() {
+    const current = new Date();
+
+    current.setHours(current.getHours() - 2);
+    current.setMinutes(current.getMinutes() - 30);
+
+
     const current_hr = current.getHours();
     const current_min = current.getMinutes();
     const current_sec = current.getSeconds();
-    const time = `${current_hr}:${current_min}:${current_sec}`;
 
-    return time
+    const formatted_hr = current_hr < 10 ? `0${current_hr}` : current_hr;
+    const formatted_min = current_min < 10 ? `0${current_min}` : current_min;
+    const formatted_sec = current_sec < 10 ? `0${current_sec}` : current_sec;
+
+    const time = `${formatted_hr}:${formatted_min}:${formatted_sec}`;
+
+    return time;
 }
+
 
 const socket = io('wss://chatroom-gy71.onrender.com',{
     auth:{
@@ -107,8 +118,12 @@ const socket = io('wss://chatroom-gy71.onrender.com',{
 socket.on('connect',()=>{
     console.log(`${user_name} joined the chatroom!`);
     const user_joined = `<div id="joined">${user_name} joined the chat at ${get_time()} </div>`
+    const user_joined_obj={
+        el: user_joined,
+        time: get_time()
+    }
     document.querySelector('#chat-messages').lastElementChild+=user_joined;
-    socket.emit('newuser',user_joined);
+    socket.emit('newuser',user_joined_obj);
     handle_goBottom();
 })
 function display_join_status(data){

@@ -15,6 +15,25 @@ const PORT = process.env.PORT;
 const user_model = require('./models/users.model');
 const chat_model = require('./models/chats.model');
 
+function get_time() {
+    const current = new Date();
+
+    current.setHours(current.getHours() - 2);
+    current.setMinutes(current.getMinutes() - 30);
+
+
+    const current_hr = current.getHours();
+    const current_min = current.getMinutes();
+    const current_sec = current.getSeconds();
+
+    const formatted_hr = current_hr < 10 ? `0${current_hr}` : current_hr;
+    const formatted_min = current_min < 10 ? `0${current_min}` : current_min;
+    const formatted_sec = current_sec < 10 ? `0${current_sec}` : current_sec;
+
+    const time = `${formatted_hr}:${formatted_min}:${formatted_sec}`;
+
+    return time;
+}
 
 
 const activeUsers = {};
@@ -68,9 +87,9 @@ io.on('connection',(socket)=>{
         
         chat_model.create({
             username: 'null',
-            msg: data,
+            msg: data.el,
             email:'null_email',
-            time:get_time()
+            time:data.time
         });
         socket.broadcast.emit('newuser',data)
     });
@@ -81,7 +100,6 @@ io.on('connection',(socket)=>{
                     username: 'null',
                     msg: userLeftMessage,
                     email:'null_email',
-                    time:get_time()
                 });
         socket.broadcast.emit('userLeft', userLeftMessage);
         delete activeUsers[socket.id];
