@@ -188,6 +188,7 @@ function send_message(){
             'username':user_name,
             'msg':msg.value,
             'email':email,
+            'time':get_time()
         }
         const msg_sent = `<div id="msg_sent">
             <label id="user_name">${user_name}</label><br>

@@ -15,15 +15,7 @@ const PORT = process.env.PORT;
 const user_model = require('./models/users.model');
 const chat_model = require('./models/chats.model');
 
-function get_time(){
-    const current = new Date()
-    const current_hr = current.getHours();
-    const current_min = current.getMinutes();
-    const current_sec = current.getSeconds();
-    const time = `${current_hr}:${current_min}:${current_sec}`;
 
-    return time
-}
 
 const activeUsers = {};
 io.use((socket, next) => {
@@ -60,16 +52,13 @@ io.on('connection',(socket)=>{
         
         // const user =userModel.findOne({email})
         socket.broadcast.emit('message',data);
-        console.log(data.username,">>>>>",data.msg)
-        const username = data.username;
-        const msg = data.msg;
-        const email = data.email;
+        console.log(data)
         
         chat_model.create({
-            username: username,
-            msg: msg,
-            email:email,
-            time:get_time()
+            username: data.username,
+            msg: data.msg,
+            email:data.email,
+            time:data.time
         });
         
 
