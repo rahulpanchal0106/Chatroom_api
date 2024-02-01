@@ -24,7 +24,7 @@ const config = {
 }
 
 const AUTH_OPTIONS = {
-    callbackURL: process.env.oAuthCallback_deployed,
+    callbackURL: process.env.oAuthCallback_local,
     clientID: config.CLIENT_ID,
     clientSecret: config.CLIENT_SECRET
 }

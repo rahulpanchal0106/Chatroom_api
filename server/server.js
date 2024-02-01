@@ -124,6 +124,8 @@ io.on('connection',(socket)=>{
     console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',activeUsers)
 })
 
+app.get('/')
+
 async function start_server(){
     await mongoose.connect(MONGO_URI)
     .then(()=>{
