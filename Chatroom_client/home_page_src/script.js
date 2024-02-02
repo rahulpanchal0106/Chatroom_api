@@ -73,6 +73,7 @@ function go_bottom(){
     
 }
 
+go_bottom();
  
 
 function handle_goBottom(){
@@ -227,11 +228,11 @@ document.querySelector('#send').onclick=(e)=>{
     go_bottom();
 }
 
-window.addEventListener('beforeunload', function (event) {
-    const message = 'Are you sure you want to leave? Your changes may not be saved.';
-    event.returnValue = message;
+// window.addEventListener('beforeunload', function (event) {
+//     const message = 'Are you sure you want to leave? Your changes may not be saved.';
+//     event.returnValue = message;
     
-});
+// });
 
 document.querySelector('#members').onclick=()=>{
     console.log('%%%%%%%%%%%%Clicked%%%%%%%%%%%%%%');
