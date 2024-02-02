@@ -1,6 +1,7 @@
 // do{
 //     var user_name = window.prompt('Please Enter your Name: ')
 // }while(user_name == null || user_name === " " || user_name == "" || user_name==undefined)
+
 function getJsonDataFromBase64Cookie(cookieName) {
     const cookieValue = document.cookie
       .split('; ')
@@ -32,6 +33,7 @@ async function getHistory(){
             }
         })
     })
+    go_bottom();
 }
 
 getHistory()
@@ -73,7 +75,6 @@ function go_bottom(){
     
 }
 
-go_bottom();
  
 
 function handle_goBottom(){
@@ -319,3 +320,9 @@ document.querySelector('#members').onclick=async ()=>{
 //     document.querySelector('#loading').style.display="flex"
 // }))
 
+document.addEventListener('DOMContentLoaded',()=>{
+    console.log("loaded!");
+    go_bottom();
+});
+
+go_bottom();
