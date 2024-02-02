@@ -14,6 +14,7 @@ const chats_model = require('./models/chats.model')
 const helmet = require('helmet')
 
 // const activeUsers = require('./server');
+const morgan = require('morgan');
 
 const config = {
     CLIENT_ID: process.env.CLIENT_ID,
@@ -47,6 +48,8 @@ passport.deserializeUser((obj,done)=>{
 })
 
 const app = express();
+
+app.use(morgan('dev'));
 app.use(helmet());
 
 app.use((req, res, next) => {

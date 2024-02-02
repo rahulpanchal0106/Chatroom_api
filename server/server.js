@@ -95,7 +95,7 @@ io.on('connection',(socket)=>{
     });
     
     socket.on('disconnect',()=>{
-        const userLeftMessage = `<div id="leave">${activeUsers[socket.id]} Left the chat at ${get_time()}</div>`;
+        const userLeftMessage = `< div id="leave">${activeUsers[socket.id]} Left the chat at ${get_time()}</div>`;
         chat_model.create({
                     username: 'null',
                     msg: userLeftMessage,
