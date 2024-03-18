@@ -55,11 +55,11 @@ app.use(helmet());
 app.use((req, res, next) => {
     
     const csp = {
-        'default-src': ['http://localhost:3030','https://chatroom-gy71.onrender.com'],
-        'script-src': [ 'https://cdn.socket.io/4.7.2/','https://chatroom-gy71.onrender.com','http://localhost:3030', "'unsafe-hashes'", "'unsafe-inline'", 'https://code.jquery.com', 'https://maxcdn.bootstrapcdn.com'],
-        'style-src': ['https://chatroom-gy71.onrender.com','http://localhost:3030', "'unsafe-hashes'", "'unsafe-inline'", 'https://maxcdn.bootstrapcdn.com'],
-        'img-src': ['http://localhost:3030','data:','https://chatroom-gy71.onrender.com'],
-        'font-src': [ 'https://maxcdn.bootstrapcdn.com','http://localhost:3030','https://chatroom-gy71.onrender.com'],
+        'default-src': ['http://localhost:3030','https://chatroom-gy71.onrender.com','wss://chatroom-gy71.onrender.com'],
+        'script-src': [ 'https://cdn.socket.io/4.7.2/','https://chatroom-gy71.onrender.com','wss://chatroom-gy71.onrender.com','http://localhost:3030', "'unsafe-hashes'", "'unsafe-inline'", 'https://code.jquery.com', 'https://maxcdn.bootstrapcdn.com'],
+        'style-src': ['https://chatroom-gy71.onrender.com','http://localhost:3030','wss://chatroom-gy71.onrender.com', "'unsafe-hashes'", "'unsafe-inline'", 'https://maxcdn.bootstrapcdn.com'],
+        'img-src': ['http://localhost:3030','data:','https://chatroom-gy71.onrender.com','wss://chatroom-gy71.onrender.com'],
+        'font-src': [ 'https://maxcdn.bootstrapcdn.com','http://localhost:3030','https://chatroom-gy71.onrender.com','wss://chatroom-gy71.onrender.com'],
     };
     
 
