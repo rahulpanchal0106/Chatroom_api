@@ -55,9 +55,9 @@ app.use(helmet());
 app.use((req, res, next) => {
     
     const csp = {
-        'default-src': ["'self'"],
+        'default-src': ["'self'",'http://localhost:3030/chat','https://chatroom-gy71.onrender.com'],
         'script-src': ["'self'", 'https://cdn.socket.io/4.7.2/', "'unsafe-hashes'", "'unsafe-inline'", 'https://code.jquery.com', 'https://maxcdn.bootstrapcdn.com'],
-        'style-src': ["'self'", 'http://localhost:3030/chat', "'unsafe-hashes'", "'unsafe-inline'", 'https://maxcdn.bootstrapcdn.com'],
+        'style-src': ["'self'",'https://chatroom-gy71.onrender.com','http://localhost:3030/chat', "'unsafe-hashes'", "'unsafe-inline'", 'https://maxcdn.bootstrapcdn.com'],
         'img-src': ["'self'", 'data:'],
         'font-src': ["'self'", 'https://maxcdn.bootstrapcdn.com'],
     };
