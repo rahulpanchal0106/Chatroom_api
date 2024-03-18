@@ -76,17 +76,17 @@ app.use(cookieSession({
     httpOnly:false
     
 }))
-
-// app.use(session({
-//     name: 'session',
-//     secret: [config.COOKIE_KEY_1, config.COOKIE_KEY_2],
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {
-//       maxAge: 24 * 60 * 60 * 1000,
-//       httpOnly: false,
-//     },
-// }));
+const session = require('express-session');
+app.use(session({
+    name: 'session',
+    secret: [config.COOKIE_KEY_1, config.COOKIE_KEY_2],
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000,
+      httpOnly: false,
+    },
+}));
 
 app.use(passport.initialize())
 app.use(passport.session())
