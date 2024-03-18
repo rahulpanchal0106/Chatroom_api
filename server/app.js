@@ -55,7 +55,7 @@ app.use(helmet());
 app.use((req, res, next) => {
     
     const csp = {
-        'default-src': ["'none'"],
+        'default-src': ["none"],
     };
     
     
