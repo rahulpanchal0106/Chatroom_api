@@ -55,7 +55,7 @@ app.use(helmet());
 app.use((req, res, next) => {
     
     const csp = {
-        'default-src': ['none'],
+        'default-src': ["'none'"],
     };
     
     
@@ -146,7 +146,7 @@ app.get('/failure',(req,res)=>{
 })
 
 app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,"..","Chatroom_client","landing_page.html"))
+    res.sendFile(path.join(__dirname,"..","Chatroom_client","index.html"))
 })
 
 app.use(express.static(

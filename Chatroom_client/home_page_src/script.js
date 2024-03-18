@@ -237,7 +237,7 @@ document.querySelector('#send').onclick=(e)=>{
 
 document.querySelector('#members').onclick=()=>{
     console.log('%%%%%%%%%%%%Clicked%%%%%%%%%%%%%%');
-    fetch('/members')
+    fetch('https://chatroom-gy71.onrender.com/members')
     .then(res=>{
         return res.json()
     })
@@ -281,7 +281,7 @@ document.querySelector('#options').onclick=()=>{
 let members_c = 0;
 document.querySelector('#members').onclick=async ()=>{
 
-    await fetch('/members')
+    await fetch('https://chatroom-gy71.onrender.com/members')
     .then(res=>{
         return res.json()
     })
