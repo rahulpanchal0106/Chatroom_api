@@ -108,7 +108,7 @@ function get_time() {
 }
 
 
-const socket = io('wss://chatroom-gy71.onrender.com',{
+const socket = io('https://chatroom-gy71.onrender.com',{
     auth:{
         user_name:user_name
     }

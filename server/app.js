@@ -52,22 +52,22 @@ const app = express();
 app.use(morgan('dev'));
 app.use(helmet());
 
-// app.use((req, res, next) => {
+app.use((req, res, next) => {
     
-//     const csp = {
-//         'default-src': ["'self'"],
-//         'script-src': ["'self'", 'https://cdn.socket.io/4.7.2/', "'unsafe-hashes'", "'unsafe-inline'", 'https://code.jquery.com', 'https://maxcdn.bootstrapcdn.com'],
-//         'style-src': ["'self'", 'http://localhost:3030/chat', "'unsafe-hashes'", "'unsafe-inline'", 'https://maxcdn.bootstrapcdn.com'],
-//         'img-src': ["'self'", 'data:'],
-//         'font-src': ["'self'", 'https://maxcdn.bootstrapcdn.com'],
-//     };
+    const csp = {
+        'default-src': ["'self'"],
+        'script-src': ["'self'", 'https://cdn.socket.io/4.7.2/', "'unsafe-hashes'", "'unsafe-inline'", 'https://code.jquery.com', 'https://maxcdn.bootstrapcdn.com'],
+        'style-src': ["'self'", 'http://localhost:3030/chat', "'unsafe-hashes'", "'unsafe-inline'", 'https://maxcdn.bootstrapcdn.com'],
+        'img-src': ["'self'", 'data:'],
+        'font-src': ["'self'", 'https://maxcdn.bootstrapcdn.com'],
+    };
     
 
-//     res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
+    res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
 
     
-//     next();
-// });
+    next();
+});
 
 app.use(cookieSession({
     name:'session',
