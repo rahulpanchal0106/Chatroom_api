@@ -52,16 +52,27 @@ const app = express();
 app.use(morgan('dev'));
 app.use(helmet());
 
-app.use((req, res, next) => {
+//app.use((req, res, next) => {
     
+    //const csp = {
+      //  'default-src': 'none',
+    //};
+    
+    
+
+   // res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
+
+    
+ //   next();
+//});
+app.use((req, res, next) => {
     const csp = {
-        'default-src': 'none',
+        'default-src': ['none'],
     };
     
+    const cspString = Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; ');
     
-
-    res.setHeader('Content-Security-Policy', Object.entries(csp).map(([k, v]) => `${k} ${v.join(' ')}`).join('; '));
-
+    res.setHeader('Content-Security-Policy', cspString);
     
     next();
 });
