@@ -8,7 +8,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const userModel = require('./models/users.model');
 const chatsModel = require('./models/chats.model');
-
+const app = express();
 const config = {
     CLIENT_ID: process.env.CLIENT_ID,
     CLIENT_SECRET: process.env.CLIENT_SECRET,
@@ -39,20 +39,23 @@ passport.deserializeUser((obj, done) => {
     done(null, obj);
 });
 
-const app = express();
+
 
 app.use(morgan('dev'));
 app.use(helmet());
+app.use(express.static(
+    path.join(__dirname, '..', 'Chatroom_client')
+));
 
-app.use((req, res, next) => {
-    const csp = {
-        'default-src': 'none'
-    };
+// app.use((req, res, next) => {
+//     const csp = {
+//         'default-src': 'none'
+//     };
 
-    const cspString = Object.entries(csp).map(([k, v]) => `${k} ${v}`).join('; ');
-    res.setHeader('Content-Security-Policy', cspString);
-    next();
-});
+//     const cspString = Object.entries(csp).map(([k, v]) => `${k} ${v}`).join('; ');
+//     res.setHeader('Content-Security-Policy', cspString);
+//     next();
+// });
 
 app.use(cookieSession({
     name: 'session',
@@ -106,9 +109,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "..", "Chatroom_client", "index.html"));
 });
 
-app.use(express.static(
-    path.join(__dirname, '..', 'Chatroom_client')
-));
+
 
 app.get('/history', async (req, res) => {
     console.log('History endpoint');
