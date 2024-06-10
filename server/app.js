@@ -119,7 +119,7 @@ app.get('/history', async (req, res) => {
 
 app.get('/chat', checkLoggedIn, (req, res) => {
     console.log('Serving Home Page');
-    res.sendFile(path.join(__dirname, "..", "Chatroom_client", "index.html"));
+    res.sendFile(path.join(__dirname, "..", "Chatroom_client", "chat.html"));
 });
 
 module.exports = app;
