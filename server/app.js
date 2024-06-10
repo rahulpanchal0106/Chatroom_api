@@ -42,7 +42,7 @@ passport.deserializeUser((obj, done) => {
 
 
 app.use(morgan('dev'));
-app.use(helmet());
+//app.use(helmet());
 app.use(express.static(
     path.join(__dirname, '..', 'Chatroom_client')
 ));
